@@ -11,19 +11,18 @@ import api.Variables;
 import combat.fastslayer.data.Constants;
 import combat.fastslayer.data.SlayerTask;
 import combat.fastslayer.methods.Methods;
-import discord.Discord;
-import discord.DiscordOptions;
 import lombok.Getter;
 import net.runelite.api.ChatMessageType;
 import simple.hooks.scripts.Category;
 import simple.hooks.scripts.ScriptManifest;
 import simple.hooks.simplebot.ChatMessage;
 import simple.hooks.simplebot.teleporter.Teleporter;
+import simple.robot.script.Script;
 
 @ScriptManifest(author = "Trester/Steganos", category = Category.SLAYER, description = "Does slayer", name = "Slayer", servers = {
 		"Zaros" }, version = "0.1", discord = "")
 
-public class Core extends Discord {
+public class Core extends Script {
 	// You're assigned to kill Ankou; only 1 more to go.
 	// Nieve wants you to stick to your Slayer assignments in this area.
 	// You've completed one task and received 30 points
@@ -36,9 +35,7 @@ public class Core extends Discord {
 
 	@Override
 	public void onExecute() {
-		DiscordOptions.CURRENT_SCRIPT = this.getClass();
 		Tasks.init(ctx);
-		super.onExecute();
 		resetVariables();
 		teleport = new Teleporter(ctx);
 		methods = new Methods(ctx, this);
@@ -59,7 +56,6 @@ public class Core extends Discord {
 
 	@Override
 	public void onProcess() {
-		if (!super.on()) return;
 		if (!Constants.SKIP && getMethods().requiresBank()) {
 			getMethods().bank();
 		} else if (!Constants.CHECK_TASK) {
@@ -97,8 +93,6 @@ public class Core extends Discord {
 	// return to a Slayer master.
 	@Override
 	public void onChatMessage(ChatMessage msg) {
-		super.onChatMessage(msg);
-
 		if (msg.getType() == ChatMessageType.GAMEMESSAGE) {
 			String message = msg.getMessage();
 			if (message.contains("and received")) {
@@ -140,6 +134,12 @@ public class Core extends Discord {
 				Variables.STOP = Stream.of(STOP_MESSAGES).anyMatch(msg1 -> message.contains(msg1));
 			}
 		}
+	}
+
+	@Override
+	public void onTerminate() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

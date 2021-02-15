@@ -16,7 +16,6 @@ import api.utils.Timer;
 import api.utils.Utils;
 import combat.dragons.data.Constants;
 import combat.dragons.data.Constants.TYPES;
-import discord.DiscordOptions;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.coords.WorldPoint;
 import simple.hooks.filters.SimplePrayers.Prayers;
@@ -26,7 +25,6 @@ import simple.hooks.scripts.ScriptManifest;
 import simple.hooks.simplebot.ChatMessage;
 import simple.hooks.wrappers.SimpleItem;
 import simple.hooks.wrappers.SimpleNpc;
-import simple.hooks.wrappers.SimpleObject;
 import simple.robot.script.Script;
 import simple.robot.utils.WorldArea;
 

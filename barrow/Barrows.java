@@ -13,8 +13,6 @@ import api.utils.Utils;
 import barrow.methods.Brothers;
 import barrow.methods.Constants;
 import barrow.methods.ScriptUtils;
-import discord.Discord;
-import discord.DiscordOptions;
 import lombok.Getter;
 import net.runelite.api.ChatMessageType;
 import simple.hooks.filters.SimpleSkills.Skills;
@@ -24,16 +22,15 @@ import simple.hooks.scripts.ScriptManifest;
 import simple.hooks.simplebot.ChatMessage;
 import simple.hooks.wrappers.SimpleItem;
 import simple.hooks.wrappers.SimpleNpc;
+import simple.robot.script.Script;
 
 @ScriptManifest(author = "KremeSickle", category = Category.MINIGAMES, description = "Barrows", discord = "", name = "Barrows", servers = {
 		"Zaros" }, version = "2")
-public class Barrows extends Discord implements LoopingScript {
+public class Barrows extends Script implements LoopingScript {
 	final String[] STOP_MESSAGES = { "be found: prayer potion", "be found: shark", "enough ammo", "you are dead" };
 
 	@Override
 	public void onChatMessage(ChatMessage msg) {
-		super.onChatMessage(msg);
-
 		if (msg.getType() == ChatMessageType.GAMEMESSAGE) {
 			if (msg.getMessage().contains("opened the barrows chest")) {
 				Variables.COUNT++;
@@ -50,8 +47,6 @@ public class Barrows extends Discord implements LoopingScript {
 
 	@Override
 	public void onExecute() {
-		DiscordOptions.CURRENT_SCRIPT = this.getClass();
-		super.onExecute();
 		Tasks.init(ctx);
 		utils = new ScriptUtils(ctx, this);
 		Brothers.reset();
@@ -65,8 +60,6 @@ public class Barrows extends Discord implements LoopingScript {
 
 	@Override
 	public void onProcess() {
-		if (!super.on()) return;
-
 		if (utils.checkWeapon()) {
 			Variables.STATUS = "Filling staff";
 			utils.fillStaff();

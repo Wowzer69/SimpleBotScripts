@@ -10,8 +10,6 @@ import api.Tasks;
 import api.Variables;
 import api.utils.Utils;
 import combat.sararacha.data.Constants;
-import discord.Discord;
-import discord.DiscordOptions;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.ItemID;
 import simple.hooks.filters.SimplePrayers.Prayers;
@@ -24,17 +22,17 @@ import simple.hooks.wrappers.SimpleGroundItem;
 import simple.hooks.wrappers.SimpleItem;
 import simple.hooks.wrappers.SimpleNpc;
 import simple.hooks.wrappers.SimpleObject;
+import simple.robot.script.Script;
 
 @ScriptManifest(author = "KremeSickle", category = Category.UTILITY, description = "Sarachnis", discord = "", name = "Sarachnis", servers = {
 		"Zaros" }, version = "2")
-public class Core extends Discord implements LoopingScript {
+public class Core extends Script implements LoopingScript {
 
 	private static List<Integer> LOOT = new ArrayList<Integer>();
 	final String[] STOP_MESSAGES = { "be found:", "you are dead" };
 
 	@Override
 	public void onChatMessage(ChatMessage msg) {
-		super.onChatMessage(msg);
 		if (msg.getType() == ChatMessageType.GAMEMESSAGE) {
 			if (!Variables.STOP) {
 				Variables.STOP = Stream.of(STOP_MESSAGES).anyMatch(msg1 -> msg.getMessage().contains(msg1));
@@ -44,8 +42,6 @@ public class Core extends Discord implements LoopingScript {
 
 	@Override
 	public void onExecute() {
-		DiscordOptions.CURRENT_SCRIPT = this.getClass();
-		super.onExecute();
 		Tasks.init(ctx);
 
 		LOOT.clear();
@@ -100,7 +96,6 @@ public class Core extends Discord implements LoopingScript {
 
 	@Override
 	public void onProcess() {
-		if (!super.on()) return;
 
 		if (ctx.pathing.inArea(Constants.EDGEVILE_AREA)) {
 			Tasks.getSkill().removeAll();
@@ -173,6 +168,12 @@ public class Core extends Discord implements LoopingScript {
 
 	@Override
 	public void paint(Graphics Graphs) {
+
+	}
+
+	@Override
+	public void onTerminate() {
+		// TODO Auto-generated method stub
 
 	}
 

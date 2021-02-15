@@ -9,8 +9,6 @@ import java.util.stream.Stream;
 import api.Locations;
 import api.Tasks;
 import api.Variables;
-import discord.Discord;
-import discord.DiscordOptions;
 import lombok.Getter;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.ItemID;
@@ -22,10 +20,11 @@ import simple.hooks.simplebot.ChatMessage;
 import simple.hooks.simplebot.Combat.Style;
 import simple.hooks.wrappers.SimpleItem;
 import simple.hooks.wrappers.SimpleNpc;
+import simple.robot.script.Script;
 
 @ScriptManifest(author = "KremeSickle", category = Category.COMBAT, description = "Combat", discord = "", name = "Combat", servers = {
 		"Zaros" }, version = "2")
-public class Core extends Discord implements LoopingScript {
+public class Core extends Script implements LoopingScript {
 	final String[] STOP_MESSAGES = { "be found: prayer potion", "be found: shark", "you are dead" };
 
 	@Getter
@@ -45,7 +44,6 @@ public class Core extends Discord implements LoopingScript {
 
 	@Override
 	public void onChatMessage(ChatMessage msg) {
-		super.onChatMessage(msg);
 
 		if (msg.getType() == ChatMessageType.GAMEMESSAGE) {
 			if (!Variables.STOP) {
@@ -64,8 +62,6 @@ public class Core extends Discord implements LoopingScript {
 
 	@Override
 	public void onExecute() {
-		DiscordOptions.CURRENT_SCRIPT = this.getClass();
-		super.onExecute();
 		Tasks.init(ctx);
 		tasks.clear();
 
@@ -102,7 +98,6 @@ public class Core extends Discord implements LoopingScript {
 
 	@Override
 	public void onProcess() {
-		if (!super.on()) return;
 
 		if (!ctx.pathing.inArea(Locations.EDGEVILLE_AREA) && Tasks.getAntiban().staffNearby()) {
 			System.out.println("Staff found at " + ctx.players.getLocal().getLocation());
