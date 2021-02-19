@@ -1,5 +1,7 @@
 Credit: Datev#0660
 
+https://github.com/Wowzer69/SimpleBotScripts/releases/tag/1
+
 I hope the scripts will teach someone something
 
 Scripts aren't all flawless, there are no compile errors.. Just figure it out
