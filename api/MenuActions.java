@@ -71,7 +71,7 @@ public class MenuActions {
 			if (_class == null) _class = Class.forName("client");
 			if (action == null) {
 				action = _class.getDeclaredMethod("a", int.class, int.class, int.class, int.class, java.lang.String.class,
-						java.lang.String.class, int.class, int.class, byte.class);
+						java.lang.String.class, int.class, int.class, int.class);
 			}
 
 			if (option == null) return false;
